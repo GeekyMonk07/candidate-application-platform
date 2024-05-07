@@ -26,3 +26,4 @@ const jobSlice = createSlice({
 });
 
 export default jobSlice.reducer;
+

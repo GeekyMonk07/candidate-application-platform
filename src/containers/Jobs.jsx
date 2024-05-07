@@ -3,15 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchJobs } from '../redux/actions/jobActions';
 import JobListing from '../components/JobListing';
 import FilterForm from '../components/FilterForm';
-import { Container, Grid, Typography, Box } from '@material-ui/core';
+import { Container, Grid, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     container: {
         marginTop: theme.spacing(4),
     },
-    header: {
-        marginBottom: theme.spacing(2),
+    filterContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: theme.spacing(3),
+    },
+    jobsContainer: {
+        marginBottom: theme.spacing(4),
     },
 }));
 
@@ -72,11 +77,10 @@ const Jobs = () => {
 
     return (
         <Container className={classes.container}>
-            <Box className={classes.header}>
-                <Typography variant="h4">Job Listings</Typography>
+            <Box className={classes.filterContainer}>
                 <FilterForm onApplyFilters={handleApplyFilters} />
             </Box>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} className={classes.jobsContainer}>
                 {filteredJobs.map((job) => (
                     <Grid item xs={12} sm={6} md={4} key={job.jdUid}>
                         <JobListing job={job} />
@@ -88,3 +92,4 @@ const Jobs = () => {
 };
 
 export default Jobs;
+

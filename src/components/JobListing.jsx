@@ -1,42 +1,26 @@
 import React, { useState } from 'react';
 import {
-    Card,
-    CardContent,
     Typography,
     Button,
     Box,
-    Chip,
     makeStyles,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     card: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
+        padding: theme.spacing(2),
+        border: `1px solid ${theme.palette.grey[300]}`,
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: theme.palette.background.paper,
     },
-    cardContent: {
-        flexGrow: 1,
-    },
-    jobTitle: {
-        fontWeight: 'bold',
-    },
-    companyName: {
-        marginBottom: theme.spacing(1),
-    },
-    jobDetails: {
-        marginBottom: theme.spacing(2),
-    },
-    infoContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: theme.spacing(1),
-    },
-    infoChip: {
+    logo: {
+        width: 24,
+        height: 24,
         marginRight: theme.spacing(1),
     },
-    applyButton: {
-        marginTop: 'auto',
+    button: {
+        width: '100%',
+        marginTop: theme.spacing(1),
     },
 }));
 
@@ -50,66 +34,64 @@ const JobListing = ({ job }) => {
 
     const truncatedDescription = showFullDescription
         ? job.jobDetailsFromCompany
-        : `${job.jobDetailsFromCompany.slice(0, 100)}...`;
+        : `${job.jobDetailsFromCompany.slice(0, 250)}...`;
 
     return (
-        <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-                <Typography variant="h6" className={classes.jobTitle}>
-                    {job.jobRole}
-                </Typography>
-                <Typography
-                    variant="body1"
-                    color="textSecondary"
-                    className={classes.companyName}
-                >
+        <Box className={classes.card}>
+            <Box display="flex" alignItems="center" mb={1}>
+                <img src={job.logoUrl} alt="FamPay" className={classes.logo} />
+                <Typography variant="subtitle1" fontWeight="bold">
                     {job.companyName}
                 </Typography>
-                <Box className={classes.jobDetails}>
-                    <Typography
-                        variant="body2"
-                        component="p"
-                        dangerouslySetInnerHTML={{ __html: truncatedDescription }}
-                    />
-                </Box>
-                <Box className={classes.infoContainer}>
-                    <Chip
-                        label={`${job.minExp} - ${job.maxExp} years`}
-                        variant="outlined"
-                        size="small"
-                        className={classes.infoChip}
-                    />
-                    <Chip
-                        label={job.location}
-                        variant="outlined"
-                        size="small"
-                        className={classes.infoChip}
-                    />
-                    <Chip
-                        label={`$${job.minJdSalary} - $${job.maxJdSalary}`}
-                        variant="outlined"
-                        size="small"
-                        className={classes.infoChip}
-                    />
-                </Box>
-            </CardContent>
-            <Box display="flex" justifyContent="space-between" alignItems="center" p={2}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    href={job.jdLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={classes.applyButton}
-                >
-                    Easy Apply
-                </Button>
-                <Button color="primary" onClick={toggleShowFullDescription}>
-                    {showFullDescription ? 'Show Less' : 'Show More'}
-                </Button>
             </Box>
-        </Card>
+            <Typography variant="body2" color="textSecondary" mb={1}>
+                {job.location}
+            </Typography>
+            <Typography variant="body1" fontWeight="bold" mb={1}>
+                {job.minJdSalary} - {job.maxJdSalary} LPA ✅
+            </Typography>
+            <Typography variant="h6" mb={1}>
+                {job.jobRole}
+            </Typography>
+            <Box className={classes.jobDetails}>
+                <Typography
+                    variant="body2"
+                    component="p"
+                    dangerouslySetInnerHTML={{ __html: truncatedDescription }}
+                />
+            </Box>
+            <Button color="primary" className={classes.button} onClick={toggleShowFullDescription}>
+                {showFullDescription ? 'Show Less' : 'Show More'}
+            </Button>
+            <Box mt={2}>
+                <Typography variant="body1">Minimum Experience</Typography>
+                <Typography variant="body2">{job.minExp}</Typography>
+            </Box>
+            <Button
+                variant="contained"
+                color="primary"
+                disableElevation
+                className={classes.button}
+                href={job.jdLink}
+                target="_blank"
+            >
+                Easy Apply
+            </Button>
+            <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.button}
+            >
+                Unlock referral asks
+            </Button>
+        </Box>
+        // </Grid>
+        // </Grid>
     );
 };
 
 export default JobListing;
+
+
+
+
